@@ -1,0 +1,151 @@
+competitions:
+  B1:
+    name: "Belgium 1 - Pro League"
+    region: "Belgium"
+    baseline_elo: 1500
+    k_factor: 18
+    home_field: 45
+  D1:
+    name: "Germany 1 - Bundesliga"
+    region: "Germany"
+    baseline_elo: 1550
+    k_factor: 18
+    home_field: 45
+  D2:
+    name: "Germany 2 - 2. Bundesliga"
+    region: "Germany"
+    baseline_elo: 1500
+    k_factor: 18
+    home_field: 45
+  E0:
+    name: "England 1 - Premier League"
+    region: "England"
+    baseline_elo: 1550
+    k_factor: 18
+    home_field: 45
+  E1:
+    name: "England 2 - Championship"
+    region: "England"
+    baseline_elo: 1525
+    k_factor: 18
+    home_field: 45
+  E2:
+    name: "England 3 - League One"
+    region: "England"
+    baseline_elo: 1500
+    k_factor: 20
+    home_field: 45
+  E3:
+    name: "England 4 - League Two"
+    region: "England"
+    baseline_elo: 1480
+    k_factor: 20
+    home_field: 45
+  EC:
+    name: "England 5 - National League"
+    region: "England"
+    baseline_elo: 1460
+    k_factor: 22
+    home_field: 45
+  F1:
+    name: "France 1 - Ligue 1"
+    region: "France"
+    baseline_elo: 1540
+    k_factor: 18
+    home_field: 45
+  F2:
+    name: "France 2 - Ligue 2"
+    region: "France"
+    baseline_elo: 1500
+    k_factor: 18
+    home_field: 45
+  G1:
+    name: "Greece 1 - Super League"
+    region: "Greece"
+    baseline_elo: 1500
+    k_factor: 18
+    home_field: 50
+  I1:
+    name: "Italy 1 - Serie A"
+    region: "Italy"
+    baseline_elo: 1550
+    k_factor: 18
+    home_field: 45
+  I2:
+    name: "Italy 2 - Serie B"
+    region: "Italy"
+    baseline_elo: 1500
+    k_factor: 18
+    home_field: 45
+  N1:
+    name: "Netherlands 1 - Eredivisie"
+    region: "Netherlands"
+    baseline_elo: 1530
+    k_factor: 18
+    home_field: 45
+  P1:
+    name: "Portugal 1 - Primeira Liga"
+    region: "Portugal"
+    baseline_elo: 1520
+    k_factor: 18
+    home_field: 45
+  SC0:
+    name: "Scotland 1 - Premiership"
+    region: "Scotland"
+    baseline_elo: 1500
+    k_factor: 18
+    home_field: 45
+  SC1:
+    name: "Scotland 2 - Championship"
+    region: "Scotland"
+    baseline_elo: 1485
+    k_factor: 20
+    home_field: 45
+  SC2:
+    name: "Scotland 3 - League One"
+    region: "Scotland"
+    baseline_elo: 1465
+    k_factor: 20
+    home_field: 45
+  SC3:
+    name: "Scotland 4 - League Two"
+    region: "Scotland"
+    baseline_elo: 1450
+    k_factor: 22
+    home_field: 45
+  SP1:
+    name: "Spain 1 - La Liga"
+    region: "Spain"
+    baseline_elo: 1545
+    k_factor: 18
+    home_field: 45
+  SP2:
+    name: "Spain 2 - Segunda"
+    region: "Spain"
+    baseline_elo: 1500
+    k_factor: 18
+    home_field: 45
+  T1:
+    name: "Turkey 1 - Süper Lig"
+    region: "Turkey"
+    baseline_elo: 1510
+    k_factor: 18
+    home_field: 50
+  UCL:
+    name: "Europe - Champions League"
+    region: "Europe"
+    baseline_elo: 1600
+    k_factor: 16
+    home_field: 40
+  UEL:
+    name: "Europe - Europa League"
+    region: "Europe"
+    baseline_elo: 1580
+    k_factor: 16
+    home_field: 40
+  UECL:
+    name: "Europe - Conference League"
+    region: "Europe"
+    baseline_elo: 1550
+    k_factor: 16
+    home_field: 40
