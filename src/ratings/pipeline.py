@@ -254,11 +254,13 @@ class RatingsPipeline:
         self,
         model_probs: tuple[float, float, float],
         market_probs: tuple[float, float, float],
+        model_weight: float | None = None,
     ) -> tuple[float, float, float]:
-        model_weight = MARKET_BLEND_WEIGHT
-        market_weight = 1.0 - model_weight
+        weight = MARKET_BLEND_WEIGHT if model_weight is None else float(model_weight)
+        weight = max(0.0, min(1.0, weight))
+        market_weight = 1.0 - weight
         mixed = [
-            model_weight * m + market_weight * mk
+            weight * m + market_weight * mk
             for m, mk in zip(model_probs, market_probs)
         ]
         total = sum(mixed)
