@@ -17,6 +17,7 @@ from . import elo, xg
 BASE_DIR = Path(__file__).resolve().parents[2]
 DB_PATH = BASE_DIR / "database" / "betting.duckdb"
 REPORTS_DIR = BASE_DIR / "reports"
+DATA_DIR = BASE_DIR / "data"
 
 SCHEDULE_WEIGHT = 0.02
 LUCK_WEIGHT = 4.0
@@ -616,6 +617,30 @@ class RatingsPipeline:
         strength_team_map: dict[str, float] = {}
         for row in strength_df.itertuples(index=False):
             strength_team_map.setdefault(row.team, row.strength_index)
+
+        baseline_path = DATA_DIR / "team_strength_baselines.csv"
+        if baseline_path.exists():
+            baseline_df = pd.read_csv(baseline_path)
+            for base_row in baseline_df.itertuples(index=False):
+                value = getattr(base_row, "baseline_strength", None)
+                if value is None or pd.isna(value):
+                    continue
+                strength_team_map.setdefault(base_row.team, float(value))
+
+        ratings_strength_df = self.con.execute(
+            "SELECT team, elo FROM team_ratings WHERE season = ?",
+            [strength_season],
+        ).fetchdf()
+        if not ratings_strength_df.empty:
+            for rating_row in ratings_strength_df.itertuples(index=False):
+                elo_val = getattr(rating_row, "elo", None)
+                if elo_val is None or pd.isna(elo_val):
+                    continue
+                strength_team_map.setdefault(
+                    rating_row.team,
+                    float(1.0 / (1.0 + np.exp(-(float(elo_val) - 1500.0) / 75.0)))
+                )
+
 
         def _clone_state(state: SimpleNamespace | None) -> SimpleNamespace | None:
             if state is None:
