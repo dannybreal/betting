@@ -16,8 +16,8 @@ DRAW_ALERT_XG_GAP = 0.4
 DRAW_ALERT_SOT_GAP = 1.5
 DRAW_ALERT_ELO_GAP = 35.0
 TRUSTED_MARKET_DIVS = {'E0', 'D1', 'I1', 'SP1', 'F1', 'BR1', 'UCL', 'UEL'}
-MARKET_EDGE_WARN = 0.05
-MARKET_EDGE_CAP = 0.10
+MARKET_EDGE_WARN = 0.08
+MARKET_EDGE_CAP = 0.15
 
 
 def _connect(read_only: bool = True) -> duckdb.DuckDBPyConnection:
