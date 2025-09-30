@@ -271,13 +271,17 @@ with previews_tab:
             filtered["fav_implied"] = filtered.apply(_fav_implied, axis=1)
             filtered["edge_pred"] = filtered["fav_prob"] - filtered["fav_implied"]
             filtered["market_flag"] = np.where(
-                (filtered["edge_pred"] >= MARKET_EDGE_WARN) & filtered["edge_pred"].notna(),
+                (filtered["fav_implied"].notna()) & (np.abs(filtered["edge_pred"]) >= MARKET_EDGE_WARN),
                 "Market disagree",
                 ""
             )
             hide_high_edges = st.checkbox("Hide >10pp market gaps (non-trusted leagues)", value=True)
             if hide_high_edges:
-                high_gap_mask = (filtered["edge_pred"] >= MARKET_EDGE_CAP) & (~filtered["div"].isin(TRUSTED_MARKET_DIVS))
+                high_gap_mask = (
+                    (filtered["fav_implied"].notna())
+                    & (np.abs(filtered["edge_pred"]) >= MARKET_EDGE_CAP)
+                    & (~filtered["div"].isin(TRUSTED_MARKET_DIVS))
+                )
                 filtered = filtered[~high_gap_mask]
             shortlist_enabled = st.checkbox("Apply edge shortlist filters", value=False)
             if shortlist_enabled:

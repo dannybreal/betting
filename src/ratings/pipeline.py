@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 import argparse
 import json
@@ -869,7 +869,7 @@ class RatingsPipeline:
                 fav_probs_tmp = np.asarray([p_home, p_draw, p_away])
                 fav_idx_tmp = int(np.argmax(fav_probs_tmp))
                 market_edge = float(fav_probs_tmp[fav_idx_tmp] - market_probs[fav_idx_tmp])
-                if market_edge >= MARKET_EDGE_CAP and row.div not in TRUSTED_MARKET_DIVS:
+                if abs(market_edge) >= MARKET_EDGE_CAP and row.div not in TRUSTED_MARKET_DIVS:
                     p_home, p_draw, p_away = self._blend_with_market(
                         (p_home, p_draw, p_away),
                         market_probs,
