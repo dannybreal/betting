@@ -59,6 +59,11 @@ RECENT_DRAW_DAYS = 120
 MIN_DRAW_SAMPLE = 20
 STRENGTH_SEASON_FALLBACK = '2025/2026'
 
+FAV_OVERRIDE_ELO_THRESHOLD = 65.0
+FAV_OVERRIDE_MIN_PROB = 0.60
+FAV_OVERRIDE_DRAW_PORTION = 0.6
+FAV_OVERRIDE_MAX_ADJUST = 0.20
+
 @dataclass
 class TeamState:
     elo: float
@@ -858,6 +863,26 @@ class RatingsPipeline:
                 p_home /= total
                 p_draw /= total
                 p_away /= total
+
+            fav_is_home = p_home >= p_away
+            fav_prob = p_home if fav_is_home else p_away
+            if abs(elo_diff) >= FAV_OVERRIDE_ELO_THRESHOLD:
+                target_prob = max(FAV_OVERRIDE_MIN_PROB, fav_prob)
+                needed = target_prob - fav_prob
+                if needed > 0:
+                    draw_available = p_draw * FAV_OVERRIDE_DRAW_PORTION
+                    shift = min(needed, draw_available, FAV_OVERRIDE_MAX_ADJUST)
+                    if shift > 0:
+                        if fav_is_home:
+                            p_home += shift
+                        else:
+                            p_away += shift
+                        p_draw = max(0.0, p_draw - shift)
+                        total = p_home + p_draw + p_away
+                        if total > 0:
+                            p_home /= total
+                            p_draw /= total
+                            p_away /= total
 
             elite_guard = (
                 abs(elo_diff) < 20.0

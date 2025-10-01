@@ -19,7 +19,13 @@ BASE_DIR = Path(__file__).resolve().parent
 REPO_DB_PATH = BASE_DIR / "database" / "betting.duckdb"
 DB_CACHE_DIR = Path(os.getenv("DB_CACHE_DIR", "/tmp/betting_db"))
 LOCAL_DB_PATH = DB_CACHE_DIR / "betting.duckdb"
-DB_URL = st.secrets.get("DB_URL", os.getenv("DB_URL"))
+def _get_secret(key: str) -> str | None:
+    try:
+        return st.secrets.get(key)  # type: ignore[attr-defined]
+    except Exception:
+        return None
+
+DB_URL = _get_secret("DB_URL") or os.getenv("DB_URL")
 DRAW_ALERT_MIN_PROB = 0.22
 DRAW_ALERT_MAX_GAP = 0.08
 DRAW_ALERT_XG_GAP = 0.4
@@ -29,6 +35,7 @@ TRUSTED_MARKET_DIVS = {'E0', 'D1', 'I1', 'SP1', 'F1', 'BR1', 'UCL', 'UEL'}
 VISIBLE_DIVS = {'B1','BR1','E0','E1','E2','E3','EE1','UCL','UEL','FI1','F1','F2','D1','D2','G1','I1','I2','N1','NO1','P1','SC0','SP1','SP2','SW1','T1'}
 MARKET_EDGE_WARN = 0.08
 MARKET_EDGE_CAP = 0.15
+MIN_MARKET_EDGE_ALERT = 0.08
 
 CALIBRATION_WINDOW_DAYS = 60
 CALIBRATION_MIN_SAMPLES = 40
@@ -37,6 +44,11 @@ GLOBAL_CALIBRATION_KEY = "__global__"
 OUTCOME_PROB_COLUMNS = {'H': 'prob_home', 'D': 'prob_draw', 'A': 'prob_away'}
 
 
+
+CALIBRATION_RECENT_WINDOWS = {
+    'G1': 30,
+    'BR1': 30,
+}
 
 
 def _ensure_db_path() -> Path:
@@ -94,8 +106,15 @@ def build_isotonic_calibrators(df: pd.DataFrame) -> dict[str, dict[str, Isotonic
     if 'match_date' in working.columns:
         working['match_date'] = pd.to_datetime(working['match_date'])
         if working['match_date'].notna().any():
-            cutoff = working['match_date'].max() - pd.Timedelta(days=CALIBRATION_WINDOW_DAYS)
-            recent = working[working['match_date'] >= cutoff]
+            max_date = working['match_date'].max()
+            default_cutoff = max_date - pd.Timedelta(days=CALIBRATION_WINDOW_DAYS)
+            recent_frames = [working[working['match_date'] >= default_cutoff]]
+            for div, window in CALIBRATION_RECENT_WINDOWS.items():
+                window_cutoff = max_date - pd.Timedelta(days=window)
+                mask = (working['div'] == div) & (working['match_date'] >= window_cutoff)
+                if mask.any():
+                    recent_frames.append(working[mask])
+            recent = pd.concat(recent_frames, ignore_index=True).drop_duplicates()
         else:
             recent = working
     else:
@@ -573,7 +592,7 @@ with previews_tab:
             filtered["fav_implied"] = filtered.apply(_fav_implied, axis=1)
             filtered["edge_pred"] = filtered["fav_prob"] - filtered["fav_implied"]
             filtered["market_flag"] = np.where(
-                (filtered["fav_implied"].notna()) & (np.abs(filtered["edge_pred"]) >= MARKET_EDGE_WARN),
+                (filtered["fav_implied"].notna()) & (np.abs(filtered["edge_pred"]) >= MIN_MARKET_EDGE_ALERT),
                 "Market disagree",
                 ""
             )
@@ -647,7 +666,7 @@ with previews_tab:
                         if pd.isna(prob_val) or pd.isna(imp_val):
                             continue
                         diff = float(prob_val - imp_val)
-                        if abs(diff) >= MARKET_EDGE_WARN:
+                        if abs(diff) >= MIN_MARKET_EDGE_ALERT:
                             direction = "above" if diff > 0 else "below"
                             notes.append(f"{label} prob {abs(diff) * 100:.2f}% {direction} market")
                     hist_edge = league_edge_lookup_global.get(row.get("div"))
@@ -971,7 +990,7 @@ with analysis_tab:
                 if pd.isna(prob_val) or pd.isna(imp_val):
                     continue
                 diff = float(prob_val - imp_val)
-                if abs(diff) >= MARKET_EDGE_WARN:
+                if abs(diff) >= MIN_MARKET_EDGE_ALERT:
                     direction = "above" if diff > 0 else "below"
                     messages.append(
                         f"{outcome_name_lookup[outcome_key]} prob {abs(diff) * 100:.2f}% {direction} market"
