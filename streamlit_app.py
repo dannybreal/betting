@@ -1,6 +1,11 @@
 import json
+import os
+import shutil
 import subprocess
 import sys
+import urllib.request
+from urllib.parse import urlparse
+import gzip
 from pathlib import Path
 
 import duckdb
@@ -11,7 +16,10 @@ import streamlit as st
 from sklearn.isotonic import IsotonicRegression
 
 BASE_DIR = Path(__file__).resolve().parent
-DB_PATH = BASE_DIR / "database" / "betting.duckdb"
+REPO_DB_PATH = BASE_DIR / "database" / "betting.duckdb"
+DB_CACHE_DIR = Path(os.getenv("DB_CACHE_DIR", "/tmp/betting_db"))
+LOCAL_DB_PATH = DB_CACHE_DIR / "betting.duckdb"
+DB_URL = st.secrets.get("DB_URL", os.getenv("DB_URL"))
 DRAW_ALERT_MIN_PROB = 0.22
 DRAW_ALERT_MAX_GAP = 0.08
 DRAW_ALERT_XG_GAP = 0.4
@@ -28,6 +36,35 @@ LEAGUE_EDGE_MIN_SAMPLES = 25
 GLOBAL_CALIBRATION_KEY = "__global__"
 OUTCOME_PROB_COLUMNS = {'H': 'prob_home', 'D': 'prob_draw', 'A': 'prob_away'}
 
+
+
+
+def _ensure_db_path() -> Path:
+    if LOCAL_DB_PATH.exists():
+        return LOCAL_DB_PATH
+    DB_CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    if DB_URL:
+        parsed = urlparse(DB_URL)
+        filename = Path(parsed.path).name or 'betting.duckdb'
+        tmp_path = DB_CACHE_DIR / filename
+        try:
+            with urllib.request.urlopen(DB_URL) as resp, open(tmp_path, 'wb') as fh:
+                shutil.copyfileobj(resp, fh)
+        except Exception as exc:
+            if tmp_path.exists():
+                tmp_path.unlink(missing_ok=True)
+            raise RuntimeError(f"Failed to download database from {DB_URL}: {exc}") from exc
+        if tmp_path.suffix == '.gz':
+            with gzip.open(tmp_path, 'rb') as f_in, open(LOCAL_DB_PATH, 'wb') as f_out:
+                shutil.copyfileobj(f_in, f_out)
+            tmp_path.unlink(missing_ok=True)
+        else:
+            shutil.move(tmp_path, LOCAL_DB_PATH)
+        return LOCAL_DB_PATH
+    if REPO_DB_PATH.exists():
+        shutil.copyfile(REPO_DB_PATH, LOCAL_DB_PATH)
+        return LOCAL_DB_PATH
+    raise FileNotFoundError('No DuckDB file available. Provide DB_URL secret or include database/betting.duckdb in the repo.')
 
 
 def _fit_isotonic_regression(probabilities: pd.Series, targets: pd.Series) -> IsotonicRegression | None:
@@ -209,7 +246,8 @@ def compute_league_edge_lookup(df: pd.DataFrame, calibrators: dict[str, dict[str
     return result
 
 def _connect(read_only: bool = True) -> duckdb.DuckDBPyConnection:
-    return duckdb.connect(str(DB_PATH), read_only=read_only)
+    db_path = _ensure_db_path()
+    return duckdb.connect(str(db_path), read_only=read_only)
 
 
 @st.cache_data(show_spinner=False)
