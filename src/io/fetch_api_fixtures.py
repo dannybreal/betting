@@ -15,36 +15,81 @@ DB_PATH = BASE_DIR / "database" / "betting.duckdb"
 DEFAULT_SEASON = date.today().year
 
 LEAGUE_TO_DIV = {
-    2: "UCL",    # UEFA Champions League
-    3: "UEL",    # UEFA Europa League
-    848: "UECL",  # UEFA Europa Conference League
-    39: "E0",    # England 1 - Premier League
-    40: "E1",    # England 2 - Championship
-    41: "E2",    # England 3 - League One
-    42: "E3",    # England 4 - League Two
-    45: "EC",    # England 5 - National League
-    61: "F1",    # France 1 - Ligue 1
-    62: "F2",    # France 2 - Ligue 2
-    78: "D1",    # Germany 1 - Bundesliga
-    79: "D2",    # Germany 2 - 2. Bundesliga
-    88: "N1",    # Netherlands 1 - Eredivisie
-    94: "P1",    # Portugal 1 - Primeira Liga
-    135: "I1",   # Italy 1 - Serie A
-    136: "I2",   # Italy 2 - Serie B
-    140: "SP1",  # Spain 1 - La Liga
-    141: "SP2",  # Spain 2 - Segunda
-    144: "B1",   # Belgium 1 - Pro League
-    179: "SC0",  # Scotland 1 - Premiership
-    180: "SC1",  # Scotland 2 - Championship
-    181: "SC2",  # Scotland 3 - League One
-    182: "SC3",  # Scotland 4 - League Two
-    197: "G1",   # Greece 1 - Super League
-    203: "T1",   # Turkey 1 - Super Lig
-    71: "BR1",   # Brazil 1 - Serie A
-    113: "SW1",  # Sweden 1 - Allsvenskan
-    244: "FI1",  # Finland 1 - Veikkausliiga
-    329: "EE1",  # Estonia 1 - Meistriliiga
-
+    2: "UCL",
+    3: "UEL",
+    39: "E0",
+    40: "E1",
+    41: "E2",
+    42: "E3",
+    45: "EC",
+    61: "F1",
+    62: "F2",
+    71: "BR1",
+    78: "D1",
+    79: "D2",
+    81: "D1",
+    88: "N1",
+    94: "P1",
+    103: "NO1",
+    106: "PL1",
+    113: "SW1",
+    119: "DK1",
+    121: "DK1",
+    135: "I1",
+    136: "I2",
+    137: "I1",
+    140: "SP1",
+    141: "SP2",
+    144: "B1",
+    164: "IS1",
+    172: "BG1",
+    179: "SC0",
+    180: "SC1",
+    181: "SC2",
+    182: "SC3",
+    197: "G1",
+    199: "G1",
+    203: "T1",
+    207: "CH1",
+    209: "CH1",
+    210: "HR1",
+    212: "HR1",
+    218: "AT1",
+    220: "AT1",
+    244: "FI1",
+    271: "HU1",
+    273: "HU1",
+    283: "RO1",
+    286: "RS1",
+    315: "BA1",
+    318: "CY1",
+    329: "EE1",
+    332: "SK1",
+    333: "UA1",
+    335: "UA1",
+    342: "AM1",
+    345: "CZ1",
+    347: "CZ1",
+    357: "IE1",
+    359: "IE1",
+    371: "MK1",
+    373: "SI1",
+    383: "IL1",
+    385: "IL1",
+    389: "KZ1",
+    393: "MT1",
+    419: "AZ1",
+    529: "D1",
+    555: "RO1",
+    659: "IL1",
+    664: "XK1",
+    667: "G1",
+    680: "SK1",
+    727: "PL1",
+    756: "MK1",
+    758: "GI1",
+    848: "UECL",
+    1042: "GI1",
 }
 
 COMPLETED_STATUSES = {"FT", "AET", "PEN", "AWD", "WO"}

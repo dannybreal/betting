@@ -1,151 +1,313 @@
 competitions:
+  AM1:
+    name: "Armenia 1 - Premier League"
+    region: "Armenia 1"
+    baseline_elo: 1480.0
+    k_factor: 20.0
+    home_field: 45.0
+  AT1:
+    name: "Austria 1 - Bundesliga"
+    region: "Austria 1"
+    baseline_elo: 1500.0
+    k_factor: 18.0
+    home_field: 45.0
+  AZ1:
+    name: "Azerbaijan 1 - Premyer Liqa"
+    region: "Azerbaijan 1"
+    baseline_elo: 1480.0
+    k_factor: 20.0
+    home_field: 45.0
   B1:
     name: "Belgium 1 - Pro League"
     region: "Belgium"
-    baseline_elo: 1500
-    k_factor: 18
-    home_field: 45
+    baseline_elo: 1500.0
+    k_factor: 18.0
+    home_field: 45.0
+  BA1:
+    name: "Bosnia 1 - Premijer Liga"
+    region: "Bosnia"
+    baseline_elo: 1490.0
+    k_factor: 18.0
+    home_field: 45.0
+  BG1:
+    name: "Bulgaria 1 - Parva Liga"
+    region: "Bulgaria 1"
+    baseline_elo: 1490.0
+    k_factor: 18.0
+    home_field: 45.0
+  BR1:
+    name: "Brazil 1 - Serie A"
+    region: "Brazil"
+    baseline_elo: 1520.0
+    k_factor: 18.0
+    home_field: 45.0
+  CH1:
+    name: "Switzerland 1 - Super League"
+    region: "Switzerland 1"
+    baseline_elo: 1510.0
+    k_factor: 18.0
+    home_field: 45.0
+  CY1:
+    name: "Cyprus 1 - First Division"
+    region: "Cyprus 1"
+    baseline_elo: 1485.0
+    k_factor: 20.0
+    home_field: 45.0
+  CZ1:
+    name: "Czech 1 - Fortuna Liga"
+    region: "Czech Republic"
+    baseline_elo: 1490.0
+    k_factor: 18.0
+    home_field: 45.0
   D1:
     name: "Germany 1 - Bundesliga"
     region: "Germany"
-    baseline_elo: 1550
-    k_factor: 18
-    home_field: 45
+    baseline_elo: 1550.0
+    k_factor: 18.0
+    home_field: 45.0
   D2:
     name: "Germany 2 - 2. Bundesliga"
     region: "Germany"
-    baseline_elo: 1500
-    k_factor: 18
-    home_field: 45
+    baseline_elo: 1500.0
+    k_factor: 18.0
+    home_field: 45.0
+  DK1:
+    name: "Denmark 1 - Superliga"
+    region: "Denmark 1"
+    baseline_elo: 1510.0
+    k_factor: 18.0
+    home_field: 45.0
   E0:
     name: "England 1 - Premier League"
     region: "England"
-    baseline_elo: 1550
-    k_factor: 18
-    home_field: 45
+    baseline_elo: 1550.0
+    k_factor: 18.0
+    home_field: 45.0
   E1:
     name: "England 2 - Championship"
     region: "England"
-    baseline_elo: 1525
-    k_factor: 18
-    home_field: 45
+    baseline_elo: 1525.0
+    k_factor: 18.0
+    home_field: 45.0
   E2:
     name: "England 3 - League One"
     region: "England"
-    baseline_elo: 1500
-    k_factor: 20
-    home_field: 45
+    baseline_elo: 1500.0
+    k_factor: 20.0
+    home_field: 45.0
   E3:
     name: "England 4 - League Two"
     region: "England"
-    baseline_elo: 1480
-    k_factor: 20
-    home_field: 45
-  EC:
-    name: "England 5 - National League"
-    region: "England"
-    baseline_elo: 1460
-    k_factor: 22
-    home_field: 45
+    baseline_elo: 1480.0
+    k_factor: 20.0
+    home_field: 45.0
+  EE1:
+    name: "Estonia 1 - Meistriliiga"
+    region: "Estonia"
+    baseline_elo: 1500.0
+    k_factor: 18.0
+    home_field: 45.0
   F1:
     name: "France 1 - Ligue 1"
     region: "France"
-    baseline_elo: 1540
-    k_factor: 18
-    home_field: 45
+    baseline_elo: 1540.0
+    k_factor: 18.0
+    home_field: 45.0
   F2:
     name: "France 2 - Ligue 2"
     region: "France"
-    baseline_elo: 1500
-    k_factor: 18
-    home_field: 45
+    baseline_elo: 1500.0
+    k_factor: 18.0
+    home_field: 45.0
+  FI1:
+    name: "Finland 1 - Veikkausliiga"
+    region: "Finland"
+    baseline_elo: 1500.0
+    k_factor: 18.0
+    home_field: 45.0
   G1:
     name: "Greece 1 - Super League"
     region: "Greece"
-    baseline_elo: 1500
-    k_factor: 18
-    home_field: 50
+    baseline_elo: 1500.0
+    k_factor: 18.0
+    home_field: 50.0
+  GI1:
+    name: "Gibraltar 1 - National League"
+    region: "Gibraltar 1"
+    baseline_elo: 1440.0
+    k_factor: 24.0
+    home_field: 45.0
+  HR1:
+    name: "Croatia 1 - HNL"
+    region: "Croatia 1"
+    baseline_elo: 1500.0
+    k_factor: 18.0
+    home_field: 45.0
+  HU1:
+    name: "Hungary 1 - NB I"
+    region: "Hungary 1"
+    baseline_elo: 1490.0
+    k_factor: 18.0
+    home_field: 45.0
   I1:
     name: "Italy 1 - Serie A"
     region: "Italy"
-    baseline_elo: 1550
-    k_factor: 18
-    home_field: 45
+    baseline_elo: 1550.0
+    k_factor: 18.0
+    home_field: 45.0
   I2:
     name: "Italy 2 - Serie B"
     region: "Italy"
-    baseline_elo: 1500
-    k_factor: 18
-    home_field: 45
+    baseline_elo: 1500.0
+    k_factor: 18.0
+    home_field: 45.0
+  IE1:
+    name: "Ireland 1 - Premier Division"
+    region: "Ireland 1"
+    baseline_elo: 1470.0
+    k_factor: 20.0
+    home_field: 45.0
+  IL1:
+    name: "Israel 1 - Ligat Ha-al"
+    region: "Israel 1"
+    baseline_elo: 1490.0
+    k_factor: 18.0
+    home_field: 45.0
+  IS1:
+    name: "Iceland 1 - Urvalsdeild"
+    region: "Iceland 1"
+    baseline_elo: 1460.0
+    k_factor: 20.0
+    home_field: 45.0
+  KZ1:
+    name: "Kazakhstan 1 - Premier League"
+    region: "Kazakhstan 1"
+    baseline_elo: 1475.0
+    k_factor: 20.0
+    home_field: 45.0
+  M1:
+    name: "Macedonia - First League"
+    region: "Macedonia"
+    baseline_elo: 1490.0
+    k_factor: 18.0
+    home_field: 45.0
+  MK1:
+    name: "North Macedonia 1 - First League"
+    region: "North Macedonia"
+    baseline_elo: 1490.0
+    k_factor: 18.0
+    home_field: 45.0
+  MT1:
+    name: "Malta 1 - Premier League"
+    region: "Malta 1"
+    baseline_elo: 1450.0
+    k_factor: 22.0
+    home_field: 45.0
   N1:
     name: "Netherlands 1 - Eredivisie"
     region: "Netherlands"
-    baseline_elo: 1530
-    k_factor: 18
-    home_field: 45
+    baseline_elo: 1530.0
+    k_factor: 18.0
+    home_field: 45.0
+  NO1:
+    name: "Norway 1 - Eliteserien"
+    region: "Norway"
+    baseline_elo: 1500.0
+    k_factor: 18.0
+    home_field: 45.0
   P1:
     name: "Portugal 1 - Primeira Liga"
     region: "Portugal"
-    baseline_elo: 1520
-    k_factor: 18
-    home_field: 45
+    baseline_elo: 1520.0
+    k_factor: 18.0
+    home_field: 45.0
+  PL1:
+    name: "Poland 1 - Ekstraklasa"
+    region: "Poland 1"
+    baseline_elo: 1505.0
+    k_factor: 18.0
+    home_field: 45.0
+  RO1:
+    name: "Romania 1 - Liga I"
+    region: "Romania 1"
+    baseline_elo: 1495.0
+    k_factor: 18.0
+    home_field: 45.0
+  RS1:
+    name: "Serbia 1 - SuperLiga"
+    region: "Serbia 1"
+    baseline_elo: 1495.0
+    k_factor: 18.0
+    home_field: 45.0
   SC0:
     name: "Scotland 1 - Premiership"
     region: "Scotland"
-    baseline_elo: 1500
-    k_factor: 18
-    home_field: 45
-  SC1:
-    name: "Scotland 2 - Championship"
-    region: "Scotland"
-    baseline_elo: 1485
-    k_factor: 20
-    home_field: 45
-  SC2:
-    name: "Scotland 3 - League One"
-    region: "Scotland"
-    baseline_elo: 1465
-    k_factor: 20
-    home_field: 45
-  SC3:
-    name: "Scotland 4 - League Two"
-    region: "Scotland"
-    baseline_elo: 1450
-    k_factor: 22
-    home_field: 45
+    baseline_elo: 1500.0
+    k_factor: 18.0
+    home_field: 45.0
+  SI1:
+    name: "Slovenia 1 - PrvaLiga"
+    region: "Slovenia 1"
+    baseline_elo: 1475.0
+    k_factor: 20.0
+    home_field: 45.0
+  SK1:
+    name: "Slovakia 1 - Fortuna Liga"
+    region: "Slovakia 1"
+    baseline_elo: 1480.0
+    k_factor: 20.0
+    home_field: 45.0
   SP1:
     name: "Spain 1 - La Liga"
     region: "Spain"
-    baseline_elo: 1545
-    k_factor: 18
-    home_field: 45
+    baseline_elo: 1545.0
+    k_factor: 18.0
+    home_field: 45.0
   SP2:
     name: "Spain 2 - Segunda"
     region: "Spain"
-    baseline_elo: 1500
-    k_factor: 18
-    home_field: 45
+    baseline_elo: 1500.0
+    k_factor: 18.0
+    home_field: 45.0
+  SW1:
+    name: "Sweden 1 - Allsvenskan"
+    region: "Sweden"
+    baseline_elo: 1500.0
+    k_factor: 18.0
+    home_field: 45.0
   T1:
-    name: "Turkey 1 - Süper Lig"
+    name: "Turkey 1 - SÃ¼per Lig"
     region: "Turkey"
-    baseline_elo: 1510
-    k_factor: 18
-    home_field: 50
+    baseline_elo: 1510.0
+    k_factor: 18.0
+    home_field: 50.0
+  UA1:
+    name: "Ukraine 1 - Premier League"
+    region: "Ukraine 1"
+    baseline_elo: 1510.0
+    k_factor: 18.0
+    home_field: 45.0
   UCL:
     name: "Europe - Champions League"
     region: "Europe"
-    baseline_elo: 1600
-    k_factor: 16
-    home_field: 40
-  UEL:
-    name: "Europe - Europa League"
-    region: "Europe"
-    baseline_elo: 1580
-    k_factor: 16
-    home_field: 40
+    baseline_elo: 1600.0
+    k_factor: 16.0
+    home_field: 40.0
   UECL:
     name: "Europe - Conference League"
     region: "Europe"
-    baseline_elo: 1550
-    k_factor: 16
-    home_field: 40
+    baseline_elo: 1550.0
+    k_factor: 16.0
+    home_field: 40.0
+  UEL:
+    name: "Europe - Europa League"
+    region: "Europe"
+    baseline_elo: 1580.0
+    k_factor: 16.0
+    home_field: 40.0
+  XK1:
+    name: "Kosovo 1 - Superleague"
+    region: "Kosovo 1"
+    baseline_elo: 1460.0
+    k_factor: 22.0
+    home_field: 45.0
