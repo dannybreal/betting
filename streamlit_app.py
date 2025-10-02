@@ -74,10 +74,17 @@ def _ensure_db_path() -> Path:
             shutil.move(tmp_path, LOCAL_DB_PATH)
         return LOCAL_DB_PATH
     if REPO_DB_PATH.exists():
-        shutil.copyfile(REPO_DB_PATH, LOCAL_DB_PATH)
-        return LOCAL_DB_PATH
+        return REPO_DB_PATH
     raise FileNotFoundError('No DuckDB file available. Provide DB_URL secret or include database/betting.duckdb in the repo.')
 
+
+
+def _db_signature() -> float:
+    path = _ensure_db_path()
+    try:
+        return path.stat().st_mtime
+    except FileNotFoundError:
+        return 0.0
 
 def _fit_isotonic_regression(probabilities: pd.Series, targets: pd.Series) -> IsotonicRegression | None:
     if probabilities is None or targets is None:
@@ -270,7 +277,7 @@ def _connect(read_only: bool = True) -> duckdb.DuckDBPyConnection:
 
 
 @st.cache_data(show_spinner=False)
-def load_competitions() -> pd.DataFrame:
+def load_competitions(db_sig: float) -> pd.DataFrame:
     con = _connect()
     try:
         return con.execute("SELECT * FROM competitions ORDER BY div").fetchdf()
@@ -279,7 +286,7 @@ def load_competitions() -> pd.DataFrame:
 
 
 @st.cache_data(show_spinner=False)
-def load_fixture_previews() -> pd.DataFrame:
+def load_fixture_previews(db_sig: float) -> pd.DataFrame:
     con = _connect()
     try:
         return con.execute("SELECT * FROM fixture_previews ORDER BY match_date").fetchdf()
@@ -288,7 +295,7 @@ def load_fixture_previews() -> pd.DataFrame:
 
 
 @st.cache_data(show_spinner=False)
-def load_team_ratings() -> pd.DataFrame:
+def load_team_ratings(db_sig: float) -> pd.DataFrame:
     con = _connect()
     try:
         return con.execute(
@@ -299,7 +306,7 @@ def load_team_ratings() -> pd.DataFrame:
 
 
 @st.cache_data(show_spinner=False)
-def load_post_match_data() -> pd.DataFrame:
+def load_post_match_data(db_sig: float) -> pd.DataFrame:
     con = _connect()
     try:
         query = """
@@ -357,7 +364,7 @@ def load_post_match_data() -> pd.DataFrame:
 
 
 @st.cache_data(show_spinner=False)
-def load_latest_odds() -> pd.DataFrame:
+def load_latest_odds(db_sig: float) -> pd.DataFrame:
     con = _connect()
     try:
         query = """
@@ -460,19 +467,21 @@ if st.sidebar.button("Refresh results"):
         if err_summary:
             st.sidebar.caption(err_summary[-1])
 
-competitions = load_competitions()
+db_signature = _db_signature()
+
+competitions = load_competitions(db_signature)
 if not competitions.empty:
     competitions = competitions[competitions['div'].isin(VISIBLE_DIVS)].copy()
-fixture_df = load_fixture_previews()
+fixture_df = load_fixture_previews(db_signature)
 if not fixture_df.empty:
     fixture_df = fixture_df[fixture_df['div'].isin(VISIBLE_DIVS)].copy()
-ratings_df = load_team_ratings()
+ratings_df = load_team_ratings(db_signature)
 if not ratings_df.empty:
     ratings_df = ratings_df[ratings_df['div'].isin(VISIBLE_DIVS)].copy()
-odds_df = load_latest_odds()
+odds_df = load_latest_odds(db_signature)
 if not odds_df.empty and 'div' in odds_df.columns:
     odds_df = odds_df[odds_df['div'].isin(VISIBLE_DIVS)].copy()
-post_match_full_df = load_post_match_data()
+post_match_full_df = load_post_match_data(db_signature)
 if post_match_full_df is None:
     post_match_full_df = pd.DataFrame()
 else:
